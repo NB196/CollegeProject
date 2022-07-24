@@ -36,6 +36,9 @@ public class Appointment {
 	@Column(name = "DATE", nullable = false, unique = false)  
 	private String date;
 	
+	@Column(name = "COST", nullable = false, unique = false) 
+	private int cost;
+	
 	@Column(name = "TIME", nullable = false, unique = false)  
 	private String time;
 	
@@ -43,18 +46,17 @@ public class Appointment {
 	public Appointment() {
 		super();
 	}
-	
-	
-	public Appointment(int appointmentId, int userId, String treatmentType, String date, String time) {
+
+	public Appointment(int appointmentId, int userId, String treatmentType, String date, int cost, String time) {
 		super();
 		this.appointmentId = appointmentId;
 		this.userId = userId;
 		this.treatmentType = treatmentType;
 		this.date = date;
+		this.cost = cost;
 		this.time = time;
 	}
 	
-
 	//getters and setters
 
 	public int getAppointmentId() {
@@ -89,6 +91,14 @@ public class Appointment {
 		this.date = date;
 	}
 
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
 	public String getTime() {
 		return time;
 	}
@@ -99,7 +109,7 @@ public class Appointment {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(appointmentId, date, time, treatmentType, userId);
+		return Objects.hash(appointmentId, cost, date, time, treatmentType, userId);
 	}
 
 	@Override
@@ -111,7 +121,7 @@ public class Appointment {
 		if (getClass() != obj.getClass())
 			return false;
 		Appointment other = (Appointment) obj;
-		return appointmentId == other.appointmentId && Objects.equals(date, other.date)
+		return appointmentId == other.appointmentId && cost == other.cost && Objects.equals(date, other.date)
 				&& Objects.equals(time, other.time) && Objects.equals(treatmentType, other.treatmentType)
 				&& userId == other.userId;
 	}
@@ -119,12 +129,9 @@ public class Appointment {
 	@Override
 	public String toString() {
 		return "Appointment [appointmentId=" + appointmentId + ", userId=" + userId + ", treatmentType=" + treatmentType
-				+ ", date=" + date + ", time=" + time + "]";
+				+ ", date=" + date + ", cost=" + cost + ", time=" + time + "]";
 	}
 	
 	
-	
-	
-	
-
 }
+	
