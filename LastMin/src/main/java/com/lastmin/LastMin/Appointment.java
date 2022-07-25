@@ -42,12 +42,16 @@ public class Appointment {
 	@Column(name = "TIME", nullable = false, unique = false)  
 	private String time;
 	
+	@Column(name = "BOOKEDIND", nullable = false, unique = false)
+	private String bookedInd;
+	
 	//constructor
 	public Appointment() {
 		super();
 	}
-
-	public Appointment(int appointmentId, int userId, String treatmentType, String date, int cost, String time) {
+	
+	public Appointment(int appointmentId, int userId, String treatmentType, String date, int cost, String time,
+			String bookedInd) {
 		super();
 		this.appointmentId = appointmentId;
 		this.userId = userId;
@@ -55,8 +59,10 @@ public class Appointment {
 		this.date = date;
 		this.cost = cost;
 		this.time = time;
+		this.bookedInd = bookedInd;
 	}
-	
+
+
 	//getters and setters
 
 	public int getAppointmentId() {
@@ -107,9 +113,17 @@ public class Appointment {
 		this.time = time;
 	}
 
+	public String getBookedInd() {
+		return bookedInd;
+	}
+
+	public void setBookedInd(String bookedInd) {
+		this.bookedInd = bookedInd;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(appointmentId, cost, date, time, treatmentType, userId);
+		return Objects.hash(appointmentId, bookedInd, cost, date, time, treatmentType, userId);
 	}
 
 	@Override
@@ -121,15 +135,9 @@ public class Appointment {
 		if (getClass() != obj.getClass())
 			return false;
 		Appointment other = (Appointment) obj;
-		return appointmentId == other.appointmentId && cost == other.cost && Objects.equals(date, other.date)
-				&& Objects.equals(time, other.time) && Objects.equals(treatmentType, other.treatmentType)
-				&& userId == other.userId;
-	}
-
-	@Override
-	public String toString() {
-		return "Appointment [appointmentId=" + appointmentId + ", userId=" + userId + ", treatmentType=" + treatmentType
-				+ ", date=" + date + ", cost=" + cost + ", time=" + time + "]";
+		return appointmentId == other.appointmentId && Objects.equals(bookedInd, other.bookedInd) && cost == other.cost
+				&& Objects.equals(date, other.date) && Objects.equals(time, other.time)
+				&& Objects.equals(treatmentType, other.treatmentType) && userId == other.userId;
 	}
 	
 	
