@@ -15,9 +15,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 	Appointment findAppByUserId(int userId);
 	
 	//find all appointments
-	List<Appointment> findAll();
-
-	//create app
-	//Appointment createApp (Appointment appointment);
+	List<Appointment> findAll();	
 
 }

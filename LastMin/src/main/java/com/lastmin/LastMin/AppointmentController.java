@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +24,13 @@ public class AppointmentController {
 	
 	@Autowired
 	//AppointmentRepository appRepo;
-	AppointmentRepository appS;
+	AppointmentRepository repo;
 	
 	//url to get all appointments
 	@GetMapping("/appointments")
 	public List<Appointment> index(){
 		//return appRepo.findAll();
-		return appS.findAll();
+		return repo.findAll();
 	}
 		
 	//url to get appointment by id
@@ -37,7 +38,7 @@ public class AppointmentController {
 	public Appointment getAppById(@PathVariable int id){
 		Appointment app = null;
 		try {
-			app = appS.findAppByUserId(id);
+			app = repo.findAppByUserId(id);
 		}catch(Exception e) {
 			throw new ServerErrorException("Backend issue", e);
 		}
@@ -48,18 +49,14 @@ public class AppointmentController {
 		return app;
 	}
 	
-	//POST to create appointment
-//	 @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-//	 @ResponseStatus(HttpStatus.CREATED)
-//	 public Appointment create(@RequestBody Appointment appointment) {
-//		 return appS.save(appointment);
-	@PostMapping("/createApp")
-	public Appointment createApp(@Validated @RequestBody Appointment app) {
-		return appS.save(app);
-	}
-		 
-		 
+	//Cancel appointment by userId- this works	 
+	@DeleteMapping("appointments/{id}")
+	public boolean delete(@PathVariable String id) {
+	int userId = Integer.parseInt(id);
+	repo.deleteById(userId);
+	return true;
 	 }
+}
 	
 	
 		
