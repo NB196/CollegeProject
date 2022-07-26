@@ -11,10 +11,21 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 	
 	//add in all methods here
 	
-	//query to find appointment by user id
+	//custom query to find appointment by user id
 	Appointment findAppByUserId(int userId);
 	
 	//find all appointments
-	List<Appointment> findAll();	
+	List<Appointment> findAll();
+	
+	//custom query to find all booked appointments
+	//List<Appointment> findBookedApps(boolean bookedInd);
+	
+	//create app
+	//int addApp (Appointment a);
+	
+	//save app
+	//Appointment save (Appointment app);
+
+	//void saveAll(Appointment a);
 
 }

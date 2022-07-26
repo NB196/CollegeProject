@@ -15,34 +15,34 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "appointment")
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 
 
 public class Appointment {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "APPOINTMENTID", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "APPOINTMENTID")
 	private int appointmentId;
 	
 	
-	@Column(name = "USERID", nullable = false, unique = true)  
+	@Column(name = "USERID")  
 	private int userId;
 	  
-	@Column(name = "TREATMENTTYPE", nullable = false, unique = false)  
+	@Column(name = "TREATMENTTYPE")  
 	private String treatmentType;
 	
-	@Column(name = "DATE", nullable = false, unique = false)  
+	@Column(name = "DATE")  
 	private String date;
 	
-	@Column(name = "COST", nullable = false, unique = false) 
+	@Column(name = "COST") 
 	private int cost;
 	
-	@Column(name = "TIME", nullable = false, unique = false)  
+	@Column(name = "TIME")  
 	private String time;
 	
-	@Column(name = "BOOKEDIND", nullable = false, unique = false)
+	@Column(name = "BOOKEDIND")
 	private String bookedInd;
 	
 	//constructor
@@ -62,6 +62,15 @@ public class Appointment {
 		this.bookedInd = bookedInd;
 	}
 
+	public Appointment(int userId, String treatmentType, String date, int cost, String time, String bookedInd) {
+		super();
+		this.userId = userId;
+		this.treatmentType = treatmentType;
+		this.date = date;
+		this.cost = cost;
+		this.time = time;
+		this.bookedInd = bookedInd;
+	}
 
 	//getters and setters
 
@@ -138,6 +147,12 @@ public class Appointment {
 		return appointmentId == other.appointmentId && Objects.equals(bookedInd, other.bookedInd) && cost == other.cost
 				&& Objects.equals(date, other.date) && Objects.equals(time, other.time)
 				&& Objects.equals(treatmentType, other.treatmentType) && userId == other.userId;
+	}
+
+	@Override
+	public String toString() {
+		return "Appointment [appointmentId=" + appointmentId + ", userId=" + userId + ", treatmentType=" + treatmentType
+				+ ", date=" + date + ", cost=" + cost + ", time=" + time + ", bookedInd=" + bookedInd + "]";
 	}
 	
 	
