@@ -1,6 +1,8 @@
 package com.lastmin.LastMin;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +47,7 @@ public class AppointmentController {
 		return app;
 	}
 
-	//Cancel appointment by userId
+	//beauticians can delete the appointments they created
 	@DeleteMapping("/delete/{id}")
 	public boolean delete(@PathVariable String id) {
 		int userId = Integer.parseInt(id);
@@ -63,4 +66,49 @@ public class AppointmentController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	//modify the time of appointment by using appointment id
+	@PutMapping("modify/time/{id}")
+	public ResponseEntity<Appointment> modifyTime(@PathVariable("id") int id, @RequestBody Appointment appointment){
+		Optional<Appointment> appData = repo.findById(id);
+		
+		if(appData.isPresent()) {
+			Appointment app = appData.get();
+			app.setTime(appointment.getTime());
+			return new ResponseEntity<>(repo.save(app), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	//modify the date of appointment by using appointment id
+		@PutMapping("modify/date/{id}")
+		public ResponseEntity<Appointment> modifyDate(@PathVariable("id") int id, @RequestBody Appointment appointment){
+			Optional<Appointment> appData = repo.findById(id);
+			
+			if(appData.isPresent()) {
+				Appointment app = appData.get();
+				app.setDate(appointment.getDate());
+				return new ResponseEntity<>(repo.save(app), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+		
+		//client cancel app by updating bookedInd by using appointment id
+		@PutMapping("modify/cancel/{id}")
+		public ResponseEntity<Appointment> updateBookedInd(@PathVariable("id") int id, @RequestBody Appointment appointment){
+			Optional<Appointment> appData = repo.findById(id);
+			
+			if(appData.isPresent()) {
+				Appointment app = appData.get();
+				app.setBookedInd(appointment.getBookedInd());
+				return new ResponseEntity<>(repo.save(app), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+	
+	
+	
 }
