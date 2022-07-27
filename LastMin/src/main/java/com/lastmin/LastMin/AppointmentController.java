@@ -25,7 +25,7 @@ public class AppointmentController {
 	// AppointmentRepository appRepo;
 	AppointmentRepository repo;
 
-	//get all appointments
+	//get all appointments- booked and available
 	@GetMapping("/all")
 	public List<Appointment> index() {
 		// return appRepo.findAll();
@@ -106,6 +106,20 @@ public class AppointmentController {
 				return new ResponseEntity<>(repo.save(app), HttpStatus.OK);
 			}else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+		
+		//find all available apps (not booked by clients)
+		@GetMapping("/available")
+		public ResponseEntity<List<Appointment>> findAvailableApps(){
+			try {
+				List<Appointment> appointment = repo.findByBookedInd("N");
+				if(appointment.isEmpty()) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				return new ResponseEntity<>(appointment, HttpStatus.OK);
+			}catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 	
