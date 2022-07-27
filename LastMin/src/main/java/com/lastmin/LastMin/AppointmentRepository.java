@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
-	
-	//add in all methods here
+	//find available appointments
+		List<Appointment> findByBookedInd(String bookedInd);
 	
 	//custom query to find appointment by user id
 	Appointment findAppByUserId(int userId);
@@ -17,15 +17,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 	//find all appointments
 	List<Appointment> findAll();
 	
-	//custom query to find all booked appointments
-	//List<Appointment> findBookedApps(boolean bookedInd);
 	
-	//create app
-	//int addApp (Appointment a);
 	
-	//save app
-	//Appointment save (Appointment app);
-
-	//void saveAll(Appointment a);
 
 }

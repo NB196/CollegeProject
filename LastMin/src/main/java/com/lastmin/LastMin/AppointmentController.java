@@ -25,7 +25,7 @@ public class AppointmentController {
 	// AppointmentRepository appRepo;
 	AppointmentRepository repo;
 
-	//get all appointments
+	//get all appointments- booked and available
 	@GetMapping("/all")
 	public List<Appointment> index() {
 		// return appRepo.findAll();
@@ -108,7 +108,48 @@ public class AppointmentController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 		}
+		
+		//find all available apps (not booked by clients)
+		@GetMapping("/available")
+		public ResponseEntity<List<Appointment>> findAvailableApps(){
+			try {
+				List<Appointment> appointment = repo.findByBookedInd("N");
+				if(appointment.isEmpty()) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				return new ResponseEntity<>(appointment, HttpStatus.OK);
+			}catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
+		// find all apps booked by clients
+		@GetMapping("/bookings")
+		public ResponseEntity<List<Appointment>> findBookedApps() {
+			try {
+				List<Appointment> appointment = repo.findByBookedInd("Y");
+				if (appointment.isEmpty()) {
+					return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				}
+				return new ResponseEntity<>(appointment, HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 	
-	
+		//book appointment by app id, by updating the bookingInd to Y
+		@PutMapping("modify/book/{id}")
+		public ResponseEntity<Appointment> bookApp(@PathVariable("id") int id, @RequestBody Appointment appointment){
+			//List<Appointment> app1 = repo.findByBookedInd("N");
+			Optional<Appointment> appData = repo.findById(id);
+			
+			if(appData.isPresent()) {
+				Appointment app = appData.get();
+				app.setBookedInd(appointment.getBookedInd());
+				return new ResponseEntity<>(repo.save(app), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
 	
 }
