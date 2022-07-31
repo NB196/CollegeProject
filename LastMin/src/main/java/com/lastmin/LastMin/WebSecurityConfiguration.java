@@ -30,13 +30,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception{
 		http
 			.authorizeRequests()
-			.antMatchers("/filter/{id}").hasAnyRole("beautician", "client")
-			.antMatchers("/create").hasRole("beautician")
-			.antMatchers("/delete/{id}").hasRole("beautician")
-			.antMatchers("/available").hasAnyRole("beautician", "client")
-			.antMatchers("/bookings").hasRole("beautician")
-			
-			//.anyRequest().authenticated() //does not matter what request the user makes, they first need to be authenticated
+			.antMatchers("/appointments/filter/{id}").hasAnyRole("beautician", "client") //find app by id
+			.antMatchers("/appointments/create").hasRole("beautician") //create an app
+			.antMatchers("/appointments/delete/{id}").hasRole("beautician") //beautician cancels app
+			.antMatchers("/appointments/available").hasAnyRole("beautician", "client") //apps that have not been booked on system
+			.antMatchers("/appointments/bookings").hasRole("beautician") //beauticians can see the booked apps
+			.antMatchers("/appointments/modify/date/{id}").hasAnyRole("beautician", "client") //book an app
+			.antMatchers("/appointments/modify/time/{id}").hasAnyRole("beautician", "client")
+			.antMatchers("/appointments/modify/cancel/{id}").hasRole("client") ////client cancel app by updating bookedInd by using appointment id 
+			.antMatchers("/appointments/modify/book/{id}").hasRole("client") // client book appointment by app id, by updating the bookingInd to Y
 			.and()
 			.httpBasic(); //use http authentication for this purpose
 	}
