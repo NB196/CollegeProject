@@ -1,2 +1,5 @@
+com\lastmin\LastMin\AppointmentController.class
+com\lastmin\LastMin\AppointmentRepository.class
+com\lastmin\LastMin\AppointmentService.class
 com\lastmin\LastMin\LastMinApplication.class
 com\lastmin\LastMin\Appointment.class

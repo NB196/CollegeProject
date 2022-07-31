@@ -123,7 +123,7 @@ public class AppointmentController {
 			}
 		}
 		
-		// find all apps booked by clients
+		//beauticians can view all apps booked by clients
 		@GetMapping("/bookings")
 		public ResponseEntity<List<Appointment>> findBookedApps() {
 			try {
