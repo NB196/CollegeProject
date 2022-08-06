@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerErrorException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/lastmin")
 public class AppointmentController {
 
@@ -75,7 +75,7 @@ public class AppointmentController {
 	}
 	
 	//modify the time of appointment by using appointment id
-	@PutMapping("modify/time/{id}")
+	@PutMapping("/modify/time/{id}")
 	public ResponseEntity<Appointment> modifyTime(@PathVariable("id") int id, @RequestBody Appointment appointment){
 		Optional<Appointment> appData = repo.findById(id);
 		
@@ -89,7 +89,7 @@ public class AppointmentController {
 	}
 	
 	//modify the date of appointment by using appointment id
-		@PutMapping("modify/date/{id}")
+		@PutMapping("/modify/date/{id}")
 		public ResponseEntity<Appointment> modifyDate(@PathVariable("id") int id, @RequestBody Appointment appointment){
 			Optional<Appointment> appData = repo.findById(id);
 			
