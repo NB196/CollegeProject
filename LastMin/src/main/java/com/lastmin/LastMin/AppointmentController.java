@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerErrorException;
 
 @RestController
-@RequestMapping("/appointments")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@RequestMapping("/lastmin")
 public class AppointmentController {
 
 	@Autowired
@@ -26,7 +28,7 @@ public class AppointmentController {
 	AppointmentRepository repo;
 
 	//get all appointments- booked and available
-	@GetMapping("/all")
+	@GetMapping("/appointment")
 	public List<Appointment> index() {
 		// return appRepo.findAll();
 		return repo.findAll();
@@ -67,8 +69,13 @@ public class AppointmentController {
 		}
 	}
 	
+	@PostMapping("/apps")
+	public Appointment createApp1(@RequestBody Appointment app) {
+		return repo.save(app);
+	}
+	
 	//modify the time of appointment by using appointment id
-	@PutMapping("modify/time/{id}")
+	@PutMapping("/modify/time/{id}")
 	public ResponseEntity<Appointment> modifyTime(@PathVariable("id") int id, @RequestBody Appointment appointment){
 		Optional<Appointment> appData = repo.findById(id);
 		
@@ -82,7 +89,7 @@ public class AppointmentController {
 	}
 	
 	//modify the date of appointment by using appointment id
-		@PutMapping("modify/date/{id}")
+		@PutMapping("/modify/date/{id}")
 		public ResponseEntity<Appointment> modifyDate(@PathVariable("id") int id, @RequestBody Appointment appointment){
 			Optional<Appointment> appData = repo.findById(id);
 			
