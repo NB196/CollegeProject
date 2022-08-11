@@ -11,7 +11,9 @@
 # Database Credentials
 
 spring.datasource.url=jdbc:mysql://localhost:3306/lastmin
+
 spring.datasource.username=root
+
 spring.datasource.password=password1
 
 # Database DDL and Insert Data
