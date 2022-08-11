@@ -1,20 +1,20 @@
 # CollegeProject
 
 
-#Run the Application
+# Run the Application
 1. Go to src/main/java 
 2. Go into com.lastmin.LastMin
 3. Go into file: LastMinApplication.java
 4. Right click on class, and run as : Spring Boot Application
 
 
-#Database Credentials
+# Database Credentials
 
 spring.datasource.url=jdbc:mysql://localhost:3306/lastmin
 spring.datasource.username=root
 spring.datasource.password=password1
 
-#Database DDL and Insert Data
+# Database DDL and Insert Data
 
 DROP TABLE appointment IF EXISTS
 
